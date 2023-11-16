@@ -37,8 +37,6 @@ class dbOptions
 
 
 	}
-
-
 	public void showNames()
 	{
 		string connectionString = "Data Source=DESKTOP-IBERPBJ;Initial Catalog=TEST;Integrated Security=True";
@@ -71,8 +69,6 @@ class dbOptions
 
 
 	}
-
-
 		public void CalculateGrant(int coef)
 		{
 			string connectionString = "Data Source=DESKTOP-IBERPBJ;Initial Catalog=TEST;Integrated Security=True";
@@ -102,7 +98,6 @@ class dbOptions
 
 			}
 		}
-
 	public void AddStudent(string studentName,string studentSurname,int Coef)
 	{
 		string connectionString = "Data Source=DESKTOP-IBERPBJ;Initial Catalog=TEST;Integrated Security=True";
@@ -115,24 +110,29 @@ class dbOptions
 
 			using(SqlCommand addStudent = new SqlCommand(move, conn))
 			{
-				addStudent.Parameters.AddWithValue("@Name", studentName);
-				addStudent.Parameters.AddWithValue("@Surname", studentSurname);
-				addStudent.Parameters.AddWithValue("@Coef", Coef);
-
-			
-
-				int rowsAffected = addStudent.ExecuteNonQuery();
-
-				if(rowsAffected > 0)
+				if (checkValue(Coef))
 				{
-					Console.WriteLine("Student Added Succesfully");
 
-					CalculateGrant(Coef);
+					addStudent.Parameters.AddWithValue("@Name", studentName);
+					addStudent.Parameters.AddWithValue("@Surname", studentSurname);
+					addStudent.Parameters.AddWithValue("@Coef", Coef);
+
+
+
+					int rowsAffected = addStudent.ExecuteNonQuery();
+
+					if (rowsAffected > 0)
+					{
+						Console.WriteLine("Student Added Succesfully");
+
+						CalculateGrant(Coef);
+					}
+					else
+					{
+						Console.WriteLine("Error!");
+					}
 				}
-				else
-				{
-					Console.WriteLine("Error!");
-				}
+				
 			}
 			
 
@@ -141,7 +141,6 @@ class dbOptions
 
 
 	}
-
 private int GetGrantValue(int coef)
 	{
 		if (coef >= 3000)
@@ -165,6 +164,19 @@ private int GetGrantValue(int coef)
 
 
 	}
+
+	
+
+private bool checkValue(int val)
+	{
+		if(val > 3500)
+		{
+			return false;
+		}
+		return true;
+	}
+
+
 
 
 
