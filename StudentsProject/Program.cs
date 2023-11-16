@@ -8,8 +8,7 @@ namespace StudentsProject
 		static void Main()
 		{
 			dbOptions DB = new dbOptions();
-			DB.AddStudent("vaxtang", "gomelauri", 3600);
-			
+			DB.FindStudent("nika", "jajanidze");
 		
 		}
 	}

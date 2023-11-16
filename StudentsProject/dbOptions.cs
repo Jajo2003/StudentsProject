@@ -138,7 +138,7 @@ class dbOptions
 
 
 		}
-
+	
 
 	}
 private int GetGrantValue(int coef)
@@ -176,7 +176,48 @@ private bool checkValue(int val)
 		return true;
 	}
 
+public void FindStudent(string studentName,string studentSurname)
+	{
+		
+		string connectionString = "Data Source=DESKTOP-IBERPBJ;Initial Catalog=TEST;Integrated Security=True";
 
+		string move = "SELECT Students_ID, Students_NAME, Students_Surname FROM Students as Your_Student WHERE Students_NAME = @Name AND Students_SURNAME = @Surname";
+		using(SqlConnection conn = new SqlConnection(connectionString)) {
+			
+			conn.Open();
+			using(SqlCommand findStud = new SqlCommand(move, conn))
+			{
+				findStud.Parameters.AddWithValue("@Name", studentName);
+				findStud.Parameters.AddWithValue("@Surname", studentSurname);
+
+				using (SqlDataReader r = findStud.ExecuteReader()) {
+
+					while (r.Read())
+					{
+						
+						string SearchingName = r["Students_NAME"].ToString();
+						string SearchingSurname = r["Students_SURNAME"].ToString();
+
+						if (studentName == SearchingName  && studentSurname == SearchingSurname)
+						{
+							Console.WriteLine("Your studends id is" + " " +r["Students_ID"]);
+							return;
+						}
+						
+					}
+					Console.WriteLine("Students not Found");
+				
+				
+				}
+
+
+
+			}
+
+		}
+
+
+	}
 
 
 
